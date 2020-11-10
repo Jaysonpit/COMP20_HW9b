@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+    <meta charset="utf-8">
+    <title>API Practice</title>
+    <h1>Seafood Meals</h1>
+
+    <script>
+        function getRecipe(){
+
+            request = new XMLHttpRequest();
+            console.log("1-request created");
+
+
+            request.open("GET","https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood", true)
+
+            console.log("2 - Opened");
+
+            request.onreadystatechange = function() {
+                console.log("3 - Ready State");
+
+                if (request.readyState == 4 && request.status == 200) {
+                    result = request.responseText; 
+                    var parsed = JSON.parse(result);
+                    var output = "";
+                    for(var i =0; i < parsed.meals.length; i++){
+                       output += parsed.meals[i].strMeal + "<br>" + "<img src="+ parsed.meals[i].strMealThumb + " />" + "<br><br>";
+                    }
+                    
+                    document.getElementById("data").innerHTML = output;
+
+                }
+            }
+
+            request.send();
+
+
+
+        }
+
+
+
+
+
+
+    </script>
+    </head>
+    <body onload = "getRecipe()">
+        <div id="data"></div>
+       
+    
+    
+    
+    
+    
+    
+    </body>
+
+
+
+
+</html>
